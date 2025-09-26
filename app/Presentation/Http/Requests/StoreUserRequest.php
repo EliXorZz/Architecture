@@ -2,6 +2,7 @@
 
 namespace App\Presentation\Http\Requests;
 
+use App\Application\Dto\UserDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreUserRequest extends FormRequest
@@ -27,5 +28,10 @@ class StoreUserRequest extends FormRequest
             'email' => ['required', 'email', 'max:255'],
             'phone' => ['required', 'string', 'max:20']
         ];
+    }
+
+    public function dto(): UserDto
+    {
+        return UserDto::from($this->validated());
     }
 }

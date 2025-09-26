@@ -3,14 +3,19 @@
 namespace App\Presentation\Http\Controllers;
 
 use App\Application\Dto\UserDTO;
+use App\Application\Services\CommandBus;
+use App\Commands\User\CreateUserCommand;
+use App\Commands\User\DeleteUserCommand;
+use App\Commands\User\UpdateUserCommand;
 use App\Interfaces\UserServiceInterface;
 use App\Presentation\Http\Requests\StoreUserRequest;
 use App\Presentation\Http\Requests\UpdateUserRequest;
+use App\Queries\User\GetUserQuery;
 
 class UserController extends Controller
 {
     public function __construct(
-        public UserServiceInterface $userSvc
+        private CommandBus $bus
     ) {}
 
     /**
@@ -23,8 +28,8 @@ class UserController extends Controller
      */
     public function store(StoreUserRequest $request): UserDTO
     {
-        $data = $request->validated();
-        return $this->userSvc->create($data);
+        $dto = $request->dto();
+        return $this->bus->dispatch(new CreateUserCommand($dto));
     }
 
     /**
@@ -32,7 +37,7 @@ class UserController extends Controller
      */
     public function show(int $id): UserDTO
     {
-        return $this->userSvc->get($id);
+        return $this->bus->dispatch(new GetUserQuery($id));
     }
 
     /**
@@ -40,8 +45,8 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, string $id): void
     {
-        $data = $request->validated();
-        $this->userSvc->update($id, $data);
+        $dto = $request->dto();
+        $this->bus->dispatch(new UpdateUserCommand($id, $dto));
     }
 
     /**
@@ -49,6 +54,6 @@ class UserController extends Controller
      */
     public function destroy(string $id): void
     {
-        $this->userSvc->delete($id);
+        $this->bus->dispatch(new DeleteUserCommand($id));
     }
 }

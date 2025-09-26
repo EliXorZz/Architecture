@@ -25,16 +25,4 @@ class User extends Authenticatable
         'email',
         'phone'
     ];
-
-    public function getProfile(): Profile
-    {
-        $profile = Profile::STANDARD;
-
-        $domain = Str::after($this->email, '@');
-        if ($domain == 'compagny.com') {
-            $profile = Profile::ADMIN;
-        }
-
-        return $profile;
-    }
 }
