@@ -1,23 +1,21 @@
 # 📌 Architecture du projet
 
-Le projet suit une architecture **Controller → Service → Repository → Model** pour séparer clairement les responsabilités.
+Le projet suit une clean architecture (horizontale) pour séparer clairement les responsabilités.
 
 ## 🗂 Structure
 
 - **app/**
-  - **Enums/**
-  - **Models/** → Entités & relations DB *(Eloquent)*
-  - **DTO/** → Data transfert object*
-  - **Repositories/** → Accès aux données *(requêtes DB)*
-  - **Services/** → Logique métier
-  - **Http/**
-      - **Controllers/** → Gère les requêtes HTTP
+  - **Presentation/**
+  - **Application/**
+  - **Domain/**
+  - **Persistence/**
 
 ## 🔄 Flux d'une requête
-1. **Controller** → reçoit la requête.
-2. **Service** → applique la logique métier.
-3. **Repository** → interagit avec le **Model**.
-4. **Model** → représente la base de données via Eloquent. 
+1.	**Presentation / Controller** → reçoit la requête HTTP, transforme les données en DTO.
+2.	**Application / Service** → reçoit le DTO, crée une Entity et applique la logique métier.
+3.	**Persistence / Repository** → persiste l’Entity ou récupère des données depuis la base.
+4.	**Domain / Entity** → contient toute la logique métier et les règles du domaine.
+5.	**Presentation / Controller** → transforme la réponse en DTO pour l’API ou la vue.
 
 ## API
 - POST /api/users -> Création

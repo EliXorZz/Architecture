@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Dto;
+namespace App\Application\Dto;
 
-use App\Enums\Profile;
-use Illuminate\Support\Str;
+use App\Domain\Enums\Profile;
 use Spatie\LaravelData\Data;
 
 class UserDTO extends Data

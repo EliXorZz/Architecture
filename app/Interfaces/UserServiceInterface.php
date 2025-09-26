@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Services;
+namespace App\Interfaces;
 
-use App\Dto\UserDTO;
+use App\Application\Dto\UserDTO;
 
 interface UserServiceInterface
 {

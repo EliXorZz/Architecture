@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Models;
+namespace App\Persistence\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Enums\Profile;
+use App\Domain\Enums\Profile;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Support\Str;
 
 class User extends Authenticatable
 {
@@ -24,4 +25,16 @@ class User extends Authenticatable
         'email',
         'phone'
     ];
+
+    public function getProfile(): Profile
+    {
+        $profile = Profile::STANDARD;
+
+        $domain = Str::after($this->email, '@');
+        if ($domain == 'compagny.com') {
+            $profile = Profile::ADMIN;
+        }
+
+        return $profile;
+    }
 }

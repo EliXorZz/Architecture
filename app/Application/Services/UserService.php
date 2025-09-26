@@ -1,11 +1,10 @@
 <?php
 
-namespace App\Services;
+namespace App\Application\Services;
 
-use App\Dto\UserDTO;
-use App\Enums\Profile;
-use App\Repositories\UserRepositoryInterface;
-use Illuminate\Support\Str;
+use App\Application\Dto\UserDTO;
+use App\Interfaces\UserRepositoryInterface;
+use App\Interfaces\UserServiceInterface;
 
 class UserService implements UserServiceInterface
 {
@@ -23,7 +22,7 @@ class UserService implements UserServiceInterface
             $user->last_name,
             $user->email,
             $user->phone,
-            $this->getProfileByEmail($user->email)
+            $user->getProfile()
         );
     }
 
@@ -37,7 +36,7 @@ class UserService implements UserServiceInterface
             $user->last_name,
             $user->email,
             $user->phone,
-            $this->getProfileByEmail($user->email)
+            $user->getProfile()
         );
     }
 
@@ -49,17 +48,5 @@ class UserService implements UserServiceInterface
     public function delete(int $id): void
     {
         $this->userRepository->delete($id);
-    }
-
-    private function getProfileByEmail(string $email): Profile
-    {
-        $profile = Profile::STANDARD;
-
-        $domain = Str::after($email, '@');
-        if ($domain == 'compagny.com') {
-            $profile = Profile::ADMIN;
-        }
-
-        return $profile;
     }
 }
