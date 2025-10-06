@@ -7,7 +7,6 @@ use App\Application\Services\CommandBus;
 use App\Commands\User\CreateUserCommand;
 use App\Commands\User\DeleteUserCommand;
 use App\Commands\User\UpdateUserCommand;
-use App\Interfaces\UserServiceInterface;
 use App\Presentation\Http\Requests\StoreUserRequest;
 use App\Presentation\Http\Requests\UpdateUserRequest;
 use App\Queries\User\GetUserQuery;

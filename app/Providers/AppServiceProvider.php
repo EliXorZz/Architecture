@@ -3,8 +3,10 @@
 namespace App\Providers;
 
 use App\Application\Services\UserService;
+use App\Interfaces\AccountRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
 use App\Interfaces\UserServiceInterface;
+use App\Persistence\Repositories\AccountEloquentRepository;
 use App\Persistence\Repositories\UserEloquentRepository;
 use Illuminate\Support\ServiceProvider;
 
@@ -21,8 +23,8 @@ class AppServiceProvider extends ServiceProvider
         );
 
         $this->app->bind(
-            UserServiceInterface::class,
-            UserService::class
+            AccountRepositoryInterface::class,
+            AccountEloquentRepository::class
         );
     }
 
