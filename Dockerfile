@@ -19,7 +19,7 @@ COPY . .
 
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
-RUN php artisan migrate -y
+RUN php artisan migrate
 RUN php artisan config:cache
 RUN php artisan route:cache
 RUN php artisan view:cache
