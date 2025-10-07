@@ -8,7 +8,6 @@ use App\Application\Services\CommandBus;
 use App\Commands\User\CreateUserCommand;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Foundation\Queue\Queueable;
-use phpDocumentor\Reflection\Exception;
 
 class ProcessCreateUserWithAccount implements ShouldQueueAfterCommit
 {
@@ -31,6 +30,7 @@ class ProcessCreateUserWithAccount implements ShouldQueueAfterCommit
     public function handle(CommandBus $bus): void
     {
         $userDto = $bus->dispatch(new CreateUserCommand($this->user));
-        ProcessAssociateUserWithAccount::dispatch($userDto, $this->account);
+        ProcessAssociateUserWithAccount::dispatch($userDto, $this->account)
+            ->onQueue('account-service');
     }
 }

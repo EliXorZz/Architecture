@@ -16,7 +16,8 @@ class CreateAccountWithUserCommandHandler
     {
         DB::transaction(function () use ($command) {
             $accountDto = $this->bus->dispatch(new CreateAccountCommand($command->dto->account));
-            ProcessCreateUserWithAccount::dispatch($command->dto->user, $accountDto);
+            ProcessCreateUserWithAccount::dispatch($command->dto->user, $accountDto)
+                ->onQueue('user-service');
         });
     }
 }

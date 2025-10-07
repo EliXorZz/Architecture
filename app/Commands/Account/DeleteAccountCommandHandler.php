@@ -21,7 +21,8 @@ class DeleteAccountCommandHandler
             $accounts = $this->accountRepository->listByUser($account->userId);
 
             if (count($accounts) == 0) {
-                ProcessDeleteUser::dispatch($account->id);
+                ProcessDeleteUser::dispatch($account->id)
+                    ->onQueue('user-service');
             }
         });
     }
