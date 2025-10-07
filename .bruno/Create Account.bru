@@ -1,0 +1,33 @@
+meta {
+  name: Create Account
+  type: http
+  seq: 6
+}
+
+post {
+  url: http://localhost:8000/api/accounts
+  body: json
+  auth: inherit
+}
+
+body:json {
+  {
+    "user": {
+      "first_name": "Dylan.",
+      "last_name": "Battig",
+      "email": "dylan.battig@compagny.com",
+      "phone": "0615489180"
+    },
+    "account": {
+      "user_id": 1,
+      "name": "Mon compte",
+      "currency": "USD",
+      "iban": "21405438320",
+      "balance": 15.3
+    }
+  }
+}
+
+settings {
+  encodeUrl: true
+}
