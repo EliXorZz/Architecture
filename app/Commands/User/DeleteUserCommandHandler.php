@@ -10,7 +10,7 @@ class DeleteUserCommandHandler
         private UserRepositoryInterface $userRepository
     ) {}
 
-    public function handle(CreateUserCommand $command): void
+    public function handle(DeleteUserCommand $command): void
     {
         $this->userRepository->delete($command->id);
     }

@@ -2,7 +2,9 @@
 
 namespace App\Commands\Account;
 
+use App\Application\Jobs\ProcessDeleteUser;
 use App\Interfaces\AccountRepositoryInterface;
+use Illuminate\Support\Facades\DB;
 
 class DeleteAccountCommandHandler
 {
@@ -12,6 +14,15 @@ class DeleteAccountCommandHandler
 
     public function handle(DeleteAccountCommand $command): void
     {
-        $this->accountRepository->delete($command->id);
+        DB::transaction(function () use ($command) {
+            $account = $this->accountRepository->find($command->id);
+            $this->accountRepository->delete($command->id);
+
+            $accounts = $this->accountRepository->listByUser($account->userId);
+
+            if (count($accounts) == 0) {
+                ProcessDeleteUser::dispatch($account->id);
+            }
+        });
     }
 }

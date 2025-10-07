@@ -23,7 +23,10 @@ class UpdateAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['nullable', 'integer'],
+            'user.first_name' => ['nullable', 'string', 'max:255'],
+            'user.last_name' => ['nullable', 'string', 'max:255'],
+            'user.email' => ['nullable', 'email', 'max:255'],
+            'user.phone' => ['nullable', 'string', 'max:20'],
             'name' => ['nullable', 'string', 'max:255'],
             'currency' => ['nullable', 'string', 'max:10'],
             'iban' => ['nullable', 'string', 'max:255'],

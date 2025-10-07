@@ -2,10 +2,8 @@
 
 namespace App\Providers;
 
-use App\Application\Services\UserService;
 use App\Interfaces\AccountRepositoryInterface;
 use App\Interfaces\UserRepositoryInterface;
-use App\Interfaces\UserServiceInterface;
 use App\Persistence\Repositories\AccountEloquentRepository;
 use App\Persistence\Repositories\UserEloquentRepository;
 use Illuminate\Support\ServiceProvider;

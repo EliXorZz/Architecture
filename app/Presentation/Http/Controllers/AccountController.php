@@ -4,7 +4,7 @@ namespace App\Presentation\Http\Controllers;
 
 use App\Application\Dto\AccountDTO;
 use App\Application\Services\CommandBus;
-use App\Commands\Account\CreateAccountCommand;
+use App\Commands\Account\CreateAccountWithUserCommand;
 use App\Commands\Account\DeleteAccountCommand;
 use App\Commands\Account\UpdateAccountCommand;
 use App\Presentation\Http\Requests\StoreAccountRequest;
@@ -25,10 +25,10 @@ class AccountController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(StoreAccountRequest $request): AccountDTO
+    public function store(StoreAccountRequest $request): void
     {
         $dto = $request->dto();
-        return $this->bus->dispatch(new CreateAccountCommand($dto));
+        $this->bus->dispatch(new CreateAccountWithUserCommand($dto));
     }
 
     /**

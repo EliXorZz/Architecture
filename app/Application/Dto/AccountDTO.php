@@ -10,7 +10,7 @@ class AccountDTO extends Data
 {
     public function __construct(
         public Optional|int $id,
-        public Optional|int $user_id,
+        public Optional|int|null $user_id,
         public Optional|string $name,
         public Optional|string $currency,
         public Optional|string $iban,

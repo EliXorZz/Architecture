@@ -3,12 +3,14 @@
 namespace App\Presentation\Http\Controllers;
 
 use App\Application\Dto\UserDTO;
+use App\Application\Dto\UserWithAccountsDTO;
 use App\Application\Services\CommandBus;
 use App\Commands\User\CreateUserCommand;
 use App\Commands\User\DeleteUserCommand;
 use App\Commands\User\UpdateUserCommand;
 use App\Presentation\Http\Requests\StoreUserRequest;
 use App\Presentation\Http\Requests\UpdateUserRequest;
+use App\Queries\Account\ListAccountWithUserQuery;
 use App\Queries\User\GetUserQuery;
 
 class UserController extends Controller
@@ -54,5 +56,10 @@ class UserController extends Controller
     public function destroy(string $id): void
     {
         $this->bus->dispatch(new DeleteUserCommand($id));
+    }
+
+    public function listAccounts(string $id): UserWithAccountsDTO
+    {
+        return $this->bus->dispatch(new ListAccountWithUserQuery($id));
     }
 }

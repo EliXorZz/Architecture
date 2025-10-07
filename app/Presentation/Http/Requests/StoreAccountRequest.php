@@ -2,7 +2,7 @@
 
 namespace App\Presentation\Http\Requests;
 
-use App\Application\Dto\AccountDTO;
+use App\Application\Dto\CreateAccountDTO;
 use Illuminate\Foundation\Http\FormRequest;
 
 class StoreAccountRequest extends FormRequest
@@ -23,16 +23,19 @@ class StoreAccountRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'user_id' => ['required', 'integer'],
-            'name' => ['required', 'string', 'max:255'],
-            'currency' => ['required', 'string', 'max:10'],
-            'iban' => ['required', 'string', 'max:255'],
-            'balance' => ['required', 'numeric'],
+            'user.first_name' => ['required', 'string', 'max:255'],
+            'user.last_name' => ['required', 'string', 'max:255'],
+            'user.email' => ['required', 'email', 'max:255'],
+            'user.phone' => ['required', 'string', 'max:20'],
+            'account.name' => ['required', 'string', 'max:255'],
+            'account.currency' => ['required', 'string', 'max:10'],
+            'account.iban' => ['required', 'string', 'max:255'],
+            'account.balance' => ['required', 'numeric'],
         ];
     }
 
-    public function dto(): AccountDTO
+    public function dto(): CreateAccountDTO
     {
-        return AccountDTO::from($this->validated());
+        return CreateAccountDTO::from($this->validated());
     }
 }
