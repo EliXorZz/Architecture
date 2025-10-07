@@ -11,6 +11,9 @@ class ProcessDeleteUser implements ShouldQueueAfterCommit
 {
     use Queueable;
 
+    public int $tries = 10;
+    public int $backoff = 3;
+
     /**
      * Create a new job instance.
      */

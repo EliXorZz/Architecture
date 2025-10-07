@@ -8,10 +8,14 @@ use App\Application\Services\CommandBus;
 use App\Commands\User\CreateUserCommand;
 use Illuminate\Contracts\Queue\ShouldQueueAfterCommit;
 use Illuminate\Foundation\Queue\Queueable;
+use phpDocumentor\Reflection\Exception;
 
 class ProcessCreateUserWithAccount implements ShouldQueueAfterCommit
 {
     use Queueable;
+
+    public int $tries = 10;
+    public int $backoff = 3;
 
     /**
      * Create a new job instance.
@@ -27,6 +31,7 @@ class ProcessCreateUserWithAccount implements ShouldQueueAfterCommit
     public function handle(CommandBus $bus): void
     {
         $userDto = $bus->dispatch(new CreateUserCommand($this->user));
+        throw new Exception("TEST");
         ProcessAssociateUserWithAccount::dispatch($userDto, $this->account);
     }
 }
