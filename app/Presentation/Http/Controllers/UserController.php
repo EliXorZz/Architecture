@@ -57,9 +57,4 @@ class UserController extends Controller
     {
         $this->bus->dispatch(new DeleteUserCommand($id));
     }
-
-    public function listAccounts(string $id): UserWithAccountsDTO
-    {
-        return $this->bus->dispatch(new ListAccountWithUserQuery($id));
-    }
 }

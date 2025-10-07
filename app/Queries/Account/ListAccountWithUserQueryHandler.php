@@ -3,21 +3,25 @@
 namespace App\Queries\Account;
 
 use App\Application\Dto\AccountDTO;
+use App\Application\Dto\UserDTO;
 use App\Application\Dto\UserWithAccountsDTO;
-use App\Application\Services\CommandBus;
 use App\Interfaces\AccountRepositoryInterface;
-use App\Queries\User\GetUserQuery;
+use Illuminate\Support\Facades\Http;
 
 class ListAccountWithUserQueryHandler
 {
     public function __construct(
-        private AccountRepositoryInterface $accountRepository,
-        private CommandBus $bus
+        private AccountRepositoryInterface $accountRepository
     ) {}
 
     public function handle(ListAccountWithUserQuery $command): UserWithAccountsDTO
     {
-        $user = $this->bus->dispatch(new GetUserQuery($command->userId));
+        $userJson = Http::withUrlParameters([ 'userId' => $command->userId ])
+            ->get('http://user-service/api/users/{userId}')
+            ->throw()
+            ->json();
+
+        $user = UserDTO::from($userJson);
         $accountEntities = $this->accountRepository->listByUser($command->userId);
 
         $accounts = [];

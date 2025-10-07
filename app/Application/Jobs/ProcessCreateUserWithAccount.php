@@ -31,7 +31,6 @@ class ProcessCreateUserWithAccount implements ShouldQueueAfterCommit
     public function handle(CommandBus $bus): void
     {
         $userDto = $bus->dispatch(new CreateUserCommand($this->user));
-        throw new Exception("TEST");
         ProcessAssociateUserWithAccount::dispatch($userDto, $this->account);
     }
 }

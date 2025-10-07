@@ -3,12 +3,16 @@ services:
     build:
       context: .
     container_name: user-service
+    environment:
+      - RABBITMQ_HOST=rabbitmq
     ports:
       - "8001:80"
   account-service:
     build:
       context: .
     container_name: account-service
+    environment:
+      - RABBITMQ_HOST=rabbitmq
     ports:
       - "8002:80"
   rabbitmq:

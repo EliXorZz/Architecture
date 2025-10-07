@@ -20,8 +20,6 @@ COPY . .
 RUN composer install --no-interaction --optimize-autoloader --no-dev
 
 RUN php artisan migrate
-RUN php artisan config:cache
-RUN php artisan route:cache
-RUN php artisan view:cache
 
 RUN chown -R application:application .
+COPY ./supervisord-worker.conf /opt/docker/etc/supervisor.d/laravel-worker.conf
