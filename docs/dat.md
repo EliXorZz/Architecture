@@ -1,5 +1,8 @@
 # DAT
 
+## Autheur
+#### Dylan | Ethan T. | Ethan D
+
 # Résumé
 
 Streamify est une plateforme de streaming vidéo visant un volume d'utilisateurs allant de **10 000 à 100 000 clients actifs**. L'architecture proposée est **cloud-native**, microservices, conteneurisée et basée sur des services managés pour minimiser les erreurs opérationnelles et accélérer les déploiements. Les choix technologiques privilégient la maturité, la scalabilité et l'outillage (observabilité, CI/CD, sécurité).
