@@ -37,8 +37,6 @@ Cette combinaison facilite un produit robuste, testable et scalable.
 
 Streamify est une plateforme de streaming vidéo qui propose des films, séries et documentaires, avec des fonctionnalités de recommandation, gestion d’abonnements, paiement, et lecture vidéo.
 
----
-
 ## 2. Utilisateurs du système
 
 Les **abonnés finaux** représentent le cœur de la plateforme. Ils accèdent aux contenus disponibles, utilisent les fonctionnalités de streaming et bénéficient de recommandations personnalisées selon leurs préférences et leur abonnement.
@@ -50,8 +48,6 @@ En complément, des **services internes**, organisés sous forme de microservice
 Une **gestion des habilitations** encadre l’accès aux différentes fonctionnalités. Trois niveaux principaux de rôles sont définis : **utilisateur**, **administrateur** et **super-administrateur**, chacun disposant de droits adaptés à son périmètre d’action.
 
 Le système s’adresse à un **public international**, avec une adaptation automatique de la langue et de la région, et doit pouvoir répondre à une **forte volumétrie d’utilisateurs simultanés**, notamment lors des pics d’audience.
-
----
 
 ## 3. Données manipulées par le système
 
@@ -84,8 +80,6 @@ Enfin, ces données sont **consommées** par :
 - Les **microservices internes** assurant le traitement des fonctionnalités (recommandation, facturation, lecture, etc.).
 - Les **interfaces utilisateurs**, permettant l’affichage et l’interaction avec les informations du système.
 
----
-
 ## 4. Traitements à effectuer
 
 Le système s’articule autour de plusieurs **blocs fonctionnels majeurs** :
@@ -107,8 +101,6 @@ En termes de **performance**, le système doit répondre à des exigences élev�
 - **Temps de réponse rapide** pour la recherche, la navigation et la lecture vidéo.
 - **Recommandations personnalisées** calculées en temps quasi réel.
 - **Haute disponibilité** et stabilité du service de streaming pour garantir une expérience continue et de qualité.
-
----
 
 ## 5. Interfaces par lesquelles transitent les données
 
@@ -146,8 +138,6 @@ La couche applicative décrit les aspects techniques concrets du fonctionnement 
 
 Cette couche permet de comprendre comment les microservices communiquent, stockent et traitent les données.
 
----
-
 ## 2. Identification des flux
 
 | **Flux** | **Protocole** | **Sens** | **Taille / Débit** | **Fréquence** | **Temps de réponse** | **Parcours** |
@@ -158,27 +148,21 @@ Cette couche permet de comprendre comment les microservices communiquent, stocke
 | Recommandation personnalisée | HTTPS | Client → Serveur | 10-50 Ko | À chaque chargement | < 500 ms | Internet → DMZ → Backend |
 | Notification push | HTTPS / MQTT / WebSocket | Serveur → Client | 1-5 Ko | Selon événement | < 1 s | Backend → Internet |
 
----
-
 ## 3. Identification des gisements de données
 
-- Utilisateur et profil : SQL / JSON, conservation 5 ans, accessible par microservice utilisateur, purge comptes inactifs et anonymisation
-- Historique de visionnage : NoSQL / JSON, conservation 2 ans, accessible par microservice recommandation et analytics, purge automatique
-- Catalogue de contenu : SQL + fichiers, permanent, accessible par frontend et microservice recommandation, mise à jour régulière
-- Paiement et facturation : SQL sécurisé, 10 ans, accessible par microservice paiement et audit, conforme aux normes légales
-- Logs et monitoring : JSON / fichiers, 6 mois, accessible par DevOps, rotation automatique
-- Notifications : Queue / cache, 7 jours, accessible par service notification, purge automatique
-
----
+- **Utilisateur et profil** : données SQL et JSON, conservées pendant **5 ans**, accessibles via le microservice utilisateur. Les comptes inactifs sont **purgés** et anonymisés.
+- **Historique de visionnage** : stocké en **NoSQL/JSON**, conservation **2 ans**, accessible par les microservices de recommandation et d’analytics, avec **purge automatique**.
+- **Catalogue de contenu** : données SQL et fichiers multimédias, conservation **permanente**, accessibles par le frontend et le microservice recommandation, mises à jour régulièrement.
+- **Paiement et facturation** : données SQL sécurisées, conservées **10 ans**, accessibles par le microservice paiement et pour audit, conformément aux exigences légales.
+- **Logs et monitoring** : JSON ou fichiers, conservation **6 mois**, accessibles aux équipes DevOps, avec **rotation automatique**.
+- **Notifications** : données en queue ou cache, conservées **7 jours**, accessibles par le service notification, avec **purge automatique**.
 
 ## 4. Identification des middlewares
 
-- Échanges et messaging : Kafka
-- Bases de données : PostgreSQL pour utilisateur et catalogue, Redis pour cache et sessions
-- Serveurs d’application et web : NGINX + microservices Node.js/Go pour reverse proxy et load-balancer, CDN pour distribution vidéo
-- Sécurité réseau : Firewall niveau 4, WAF, VPN interne pour communication inter-services, Bastion pour accès administrateur, Authentification OAuth 2.0 / JWT / SSO
-
----
+- **Échanges et messaging** : utilisation de **Kafka** pour la gestion des événements et des communications asynchrones entre microservices.
+- **Bases de données** : **PostgreSQL** pour les données utilisateurs et le catalogue, **Redis** pour le cache et la gestion des sessions.
+- **Serveurs d’application et web** : **NGINX** couplé aux microservices **Node.js/Go** pour le reverse proxy et l’équilibrage de charge, avec un **CDN** pour la distribution des contenus vidéo.
+- **Sécurité réseau** : protection via **firewall niveau 4**, **WAF**, **VPN interne** pour les communications inter-services, **Bastion** pour l’accès administrateur et authentification sécurisée avec **OAuth 2.0 / JWT / SSO**.
 
 ## 5. Frameworks, langages et packages
 
